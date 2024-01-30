@@ -1,11 +1,11 @@
 './index.css'
 
-import FindCats from "./components/FindCats"
+import StopWatch from "./components/StopWatch"
 
 export default function App() {
   return (
     <>
-      <FindCats />
+      <StopWatch />
     </>
   )
 }
