@@ -1,17 +1,16 @@
 import { useRef } from 'react';
+import { cats } from '../data/data';
 
-export default function FindCats() {
+export default function MyCats() {
     const itemsRef = useRef(null);
 
     function scrollToId(itemId) {
         const map = getMap()
-
         const node = map.get(itemId)
 
         node.scrollIntoView({
             behavior: "smooth"
         })
-
     }
 
     function getMap() {
@@ -24,20 +23,19 @@ export default function FindCats() {
     return (
         <>
             <nav className='fixed left-1/3 right-1/3'>
-                <button onClick={() => scrollToId(0)}>
-                    Tom
-                </button>
-                <button onClick={() => scrollToId(5)}>
-                    Maru
-                </button>
-                <button onClick={() => scrollToId(9)}>
-                    Jellylorum
-                </button>
+                {
+                    cats.map((catName) => (
+                        <button onClick={() => scrollToId(catName.id)} key={catName.id}>
+                            {catName.name}
+                        </button>
+
+                    ))
+                }
             </nav>
             <div>
                 <ul>
-                    {catList.map(cat => (
-                        <li
+                    {cats.map(cat => (
+                        <li className='mb-10'
                             key={cat.id}
                             ref={(node) => {
                                 const map = getMap()
@@ -48,23 +46,16 @@ export default function FindCats() {
                                 }
                             }}
                         >
-                            <img
-                                src={cat.imageUrl}
+                            <img className='w-[300px] h-[300px] object-contain'
+                                src={cat.image}
                                 alt={'Cat #' + cat.id}
                             />
+                            <span> {cat.description} </span>
                         </li>
                     ))}
                 </ul>
             </div>
         </>
     );
-}
-
-const catList = [];
-for (let i = 0; i < 10; i++) {
-    catList.push({
-        id: i,
-        imageUrl: 'https://placekitten.com/250/200?image=' + i
-    });
 }
 
